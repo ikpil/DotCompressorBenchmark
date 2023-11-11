@@ -16,30 +16,36 @@ public static class Benchmarks
         {
             var benchmarks = new List<IBenchmark>();
 
+            // MemCopy
             benchmarks.Add(new BenchmarkMemCopy());
 
+            // FastLZ
             benchmarks.Add(new BenchmarkDotFastLZ(1));
             benchmarks.Add(new BenchmarkDotFastLZ(2));
 
-            benchmarks.Add(new BenchmarkK4osLZ4(LZ4Level.L00_FAST));
-            benchmarks.Add(new BenchmarkK4osLZ4(LZ4Level.L03_HC));
-            benchmarks.Add(new BenchmarkK4osLZ4(LZ4Level.L09_HC));
-            benchmarks.Add(new BenchmarkK4osLZ4(LZ4Level.L12_MAX));
+            // LZ4
+            foreach (LZ4Level value in Enum.GetValues(typeof(LZ4Level)))
+            {
+                benchmarks.Add(new BenchmarkK4osLZ4(value));
+            }
 
-            benchmarks.Add(new BenchmarkSystemZip(CompressionLevel.Fastest));
-            benchmarks.Add(new BenchmarkSystemZip(CompressionLevel.Optimal));
+            // Zip
+            foreach (CompressionLevel value in Enum.GetValues(typeof(CompressionLevel)))
+            {
+                benchmarks.Add(new BenchmarkSystemZip(value));
+            }
 
             var results = new List<BenchmarkResult>();
             foreach (var file in files)
             {
                 var srcBytes = ToBytes(file);
                 var dstBytes = new byte[srcBytes.Length * 2];
-            
+
                 foreach (var benchmark in benchmarks)
                 {
                     var result = benchmark.Roundtrip(file, srcBytes.ToArray(), dstBytes);
                     results.Add(result);
-            
+
                     Console.WriteLine(result.ToString());
                 }
             }
@@ -61,7 +67,7 @@ public static class Benchmarks
 
         return buffer;
     }
-    
+
     public static BenchmarkResult Roundtrip(string name, string filename, byte[] srcBytes, byte[] dstBytes, Func<byte[], byte[], long> compress, Func<byte[], long, byte[], long> decompress)
     {
         var result = new BenchmarkResult();
