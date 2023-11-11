@@ -66,7 +66,7 @@ public static class Benchmarks
     {
         var result = new BenchmarkResult();
         result.Name = name;
-        result.FileName = filename;
+        result.FileName = Path.GetFileName(filename);
         result.Times = 5;
         result.SourceByteLength = srcBytes.Length;
         result.Compression.ElapsedWatch = new Stopwatch();
