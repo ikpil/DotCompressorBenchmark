@@ -66,7 +66,7 @@ public static class Program
     private static void Usage()
     {
         Console.WriteLine($"dcbench: .net compressor benchmark tool {Version}");
-        Console.WriteLine($"Copyright (C) Choi Ikpil(ikpil@naver.com)");
+        Console.WriteLine($"Copyright (c) Choi Ikpil(ikpil@naver.com)");
         Console.WriteLine($" - https://github.com/ikpil/DotCompressorBenchmark");
         Console.WriteLine($"");
         Console.WriteLine($"Usage: dcbench [options] input-file");
