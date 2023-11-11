@@ -1,6 +1,5 @@
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![.NET](https://github.com/ikpil/DotCompressorBenchmark/actions/workflows/dotnet.yml/badge.svg)](https://github.com/ikpil/DotCompressorBenchmark/actions/workflows/dotnet.yml)
 [![CodeQL](https://github.com/ikpil/DotCompressorBenchmark/actions/workflows/codeql.yml/badge.svg)](https://github.com/ikpil/DotCompressorBenchmark/actions/workflows/codeql.yml)
-[![NuGet Version and Downloads count](https://buildstats.info/nuget/DotCompressorBenchmark.Compression)](https://www.nuget.org/packages/DotCompressorBenchmark.Compression)
 ![Repo Size](https://img.shields.io/github/repo-size/ikpil/DotCompressorBenchmark.svg?colorB=lightgray)
 ![Languages](https://img.shields.io/github/languages/top/ikpil/DotCompressorBenchmark)
