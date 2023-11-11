@@ -14,22 +14,20 @@ public static class Benchmarks
     {
         try
         {
-            //R.ExtractAll();
+            var benchmarks = new List<IBenchmark>();
 
-            var benchmakrs = new List<IBenchmark>();
+            benchmarks.Add(new BenchmarkMemCopy());
 
-            benchmakrs.Add(new BenchmarkMemCopy());
+            benchmarks.Add(new BenchmarkDotFastLZ(1));
+            benchmarks.Add(new BenchmarkDotFastLZ(2));
 
-            benchmakrs.Add(new BenchmarkDotFastLZ(1));
-            benchmakrs.Add(new BenchmarkDotFastLZ(2));
+            benchmarks.Add(new BenchmarkK4osLZ4(LZ4Level.L00_FAST));
+            benchmarks.Add(new BenchmarkK4osLZ4(LZ4Level.L03_HC));
+            benchmarks.Add(new BenchmarkK4osLZ4(LZ4Level.L09_HC));
+            benchmarks.Add(new BenchmarkK4osLZ4(LZ4Level.L12_MAX));
 
-            benchmakrs.Add(new BenchmarkK4osLZ4(LZ4Level.L00_FAST));
-            benchmakrs.Add(new BenchmarkK4osLZ4(LZ4Level.L03_HC));
-            benchmakrs.Add(new BenchmarkK4osLZ4(LZ4Level.L09_HC));
-            benchmakrs.Add(new BenchmarkK4osLZ4(LZ4Level.L12_MAX));
-
-            benchmakrs.Add(new BenchmarkSystemZip(CompressionLevel.Fastest));
-            benchmakrs.Add(new BenchmarkSystemZip(CompressionLevel.Optimal));
+            benchmarks.Add(new BenchmarkSystemZip(CompressionLevel.Fastest));
+            benchmarks.Add(new BenchmarkSystemZip(CompressionLevel.Optimal));
 
             var results = new List<BenchmarkResult>();
             foreach (var file in files)
@@ -37,7 +35,7 @@ public static class Benchmarks
                 var srcBytes = ToBytes(file);
                 var dstBytes = new byte[srcBytes.Length * 2];
             
-                foreach (var benchmark in benchmakrs)
+                foreach (var benchmark in benchmarks)
                 {
                     var result = benchmark.Roundtrip(file, srcBytes.ToArray(), dstBytes);
                     results.Add(result);
@@ -52,10 +50,6 @@ public static class Benchmarks
         {
             Console.WriteLine(e);
             throw;
-        }
-        finally
-        {
-            //R.DeleteAll();
         }
     }
 
