@@ -41,13 +41,13 @@ public static class Program
                 return 0;
             }
 
-            if (!File.Exists(argument))
+            var filepath = Path.GetFullPath(argument);
+            if (!File.Exists(filepath))
             {
-                Console.WriteLine($"not found file - {argument}");
+                Console.WriteLine($"not found file - {filepath}");
                 continue;
             }
             
-            var filepath = Path.GetFullPath(argument);
             filenames.Add(filepath);
         }
 
@@ -57,7 +57,7 @@ public static class Program
             return 0;
         }
 
-        var benchmarks = Benchmarks.Benchmark();
+        var benchmarks = Benchmarks.Benchmark(filenames);
         Benchmarks.Print("Benchmark", benchmarks);
 
         return 0;

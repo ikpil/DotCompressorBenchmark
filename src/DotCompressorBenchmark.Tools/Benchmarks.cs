@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using K4os.Compression.LZ4;
@@ -9,7 +10,7 @@ namespace DotCompressorBenchmark.Tools;
 
 public static class Benchmarks
 {
-    public static List<BenchmarkResult> Benchmark()
+    public static List<BenchmarkResult> Benchmark(List<string> files)
     {
         try
         {
@@ -31,20 +32,19 @@ public static class Benchmarks
             benchmakrs.Add(new BenchmarkSystemZip(CompressionLevel.Optimal));
 
             var results = new List<BenchmarkResult>();
-            // foreach (var file in R.SourceFiles)
-            // {
-            //     var filepath = R.Find(Path.Combine(R.Prefix, file));
-            //     var srcBytes = R.ToBytes(filepath);
-            //     var dstBytes = new byte[srcBytes.Length * 2];
-            //
-            //     foreach (var benchmark in benchmakrs)
-            //     {
-            //         var result = benchmark.Start(file, srcBytes.ToArray(), dstBytes);
-            //         results.Add(result);
-            //
-            //         Console.WriteLine(result.ToString());
-            //     }
-            // }
+            foreach (var file in files)
+            {
+                var srcBytes = ToBytes(file);
+                var dstBytes = new byte[srcBytes.Length * 2];
+            
+                foreach (var benchmark in benchmakrs)
+                {
+                    var result = benchmark.Roundtrip(file, srcBytes.ToArray(), dstBytes);
+                    results.Add(result);
+            
+                    Console.WriteLine(result.ToString());
+                }
+            }
 
             return results;
         }
@@ -59,6 +59,15 @@ public static class Benchmarks
         }
     }
 
+    public static byte[] ToBytes(string filepath)
+    {
+        using var fs = new FileStream(filepath, FileMode.Open, FileAccess.Read, FileShare.Read);
+        byte[] buffer = new byte[fs.Length];
+        fs.Read(buffer, 0, buffer.Length);
+
+        return buffer;
+    }
+    
     public static BenchmarkResult Roundtrip(string name, string filename, byte[] srcBytes, byte[] dstBytes, Func<byte[], byte[], long> compress, Func<byte[], long, byte[], long> decompress)
     {
         var result = new BenchmarkResult();
