@@ -9,7 +9,7 @@ namespace DotCompressorBenchmark.Tools;
 
 public static class Benchmarks
 {
-    public static void Benchmark()
+    public static List<BenchmarkResult> Benchmark()
     {
         try
         {
@@ -46,7 +46,7 @@ public static class Benchmarks
             //     }
             // }
 
-            Benchmarks.Print($"Benchmark", results);
+            return results;
         }
         catch (Exception e)
         {
