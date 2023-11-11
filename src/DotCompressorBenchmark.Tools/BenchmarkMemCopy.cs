@@ -12,9 +12,9 @@ public class BenchmarkMemCopy : IBenchmark
     {
     }
 
-    public BenchmarkResult Start(string filename, byte[] srcBytes, byte[] dstBytes)
+    public BenchmarkResult Roundtrip(string filename, byte[] srcBytes, byte[] dstBytes)
     {
-        return Benchmarks.Start(Name, filename, srcBytes, dstBytes, CompressMemcpy, DecompressMemcpy);
+        return Benchmarks.Roundtrip(Name, filename, srcBytes, dstBytes, CompressMemcpy, DecompressMemcpy);
     }
 
 

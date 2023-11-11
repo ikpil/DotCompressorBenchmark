@@ -6,20 +6,19 @@ namespace DotCompressorBenchmark.Tools;
 
 public class BenchmarkSystemZip : IBenchmark
 {
-    public string Name => _name;
+    public string Name { get; }
 
-    private string _name;
-    private CompressionLevel _level;
+    private readonly CompressionLevel _level;
 
     public BenchmarkSystemZip(CompressionLevel level)
     {
         _level = level;
-        _name = $"System.Io.Zip {_level.ToString()}";
+        Name = $"System.Io.Zip {_level.ToString()}";
     }
 
-    public BenchmarkResult Start(string filename, byte[] srcBytes, byte[] dstBytes)
+    public BenchmarkResult Roundtrip(string filename, byte[] srcBytes, byte[] dstBytes)
     {
-        return Benchmarks.Start(Name, filename, srcBytes, dstBytes, (s, d) => CompressZip(s, d, _level), DecompressZip);
+        return Benchmarks.Roundtrip(Name, filename, srcBytes, dstBytes, (s, d) => CompressZip(s, d, _level), DecompressZip);
     }
 
     private static long CompressZip(byte[] srcBytes, byte[] dstBytes, CompressionLevel level)

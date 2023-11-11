@@ -5,15 +5,14 @@ namespace DotCompressorBenchmark.Tools;
 
 public class BenchmarkK4osLZ4 : IBenchmark
 {
-    public string Name => _name;
+    public string Name { get; }
 
-    private string _name;
-    private LZ4Level _level;
+    private readonly LZ4Level _level;
 
     public BenchmarkK4osLZ4(LZ4Level level)
     {
         _level = level;
-        _name = $"K4os.LZ L{_level.ToString()}";
+        Name = $"K4os.LZ L{_level.ToString()}";
 
         // // K4os LZ4
         // var k4osL01 = Benchmark($"K4os.Compression.LZ4 L00", filename,
@@ -32,9 +31,9 @@ public class BenchmarkK4osLZ4 : IBenchmark
     }
 
 
-    public BenchmarkResult Start(string filename, byte[] srcBytes, byte[] dstBytes)
+    public BenchmarkResult Roundtrip(string filename, byte[] srcBytes, byte[] dstBytes)
     {
-        return Benchmarks.Start(Name, filename, srcBytes, dstBytes,
+        return Benchmarks.Roundtrip(Name, filename, srcBytes, dstBytes,
             (s, d) => CompressK4osLZ4(s, d, _level), DecompressK4osLZ4);
     }
 

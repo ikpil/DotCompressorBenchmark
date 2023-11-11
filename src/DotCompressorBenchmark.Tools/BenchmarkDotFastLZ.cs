@@ -4,23 +4,23 @@ namespace DotCompressorBenchmark.Tools;
 
 public class BenchmarkDotFastLZ : IBenchmark
 {
-    public string Name => _name;
-    private string _name;
-    private int _level;
+    public string Name { get; }
+
+    private readonly int _level;
 
     public BenchmarkDotFastLZ(int level)
     {
-        _name = $"DotFastLZ L{level}";
+        Name = $"DotFastLZ L{level}";
         _level = level;
     }
 
-    public BenchmarkResult Start(string filename, byte[] srcBytes, byte[] dstBytes)
+    public BenchmarkResult Roundtrip(string filename, byte[] srcBytes, byte[] dstBytes)
     {
         var compress = CompressDotFastLZL1;
         if (_level == 2)
             compress = CompressDotFastLZL2;
 
-        return Benchmarks.Start(Name, filename, srcBytes, dstBytes, compress, DecompressDotFastLZ);
+        return Benchmarks.Roundtrip(Name, filename, srcBytes, dstBytes, compress, DecompressDotFastLZ);
     }
 
     private static long CompressDotFastLZL1(byte[] srcBytes, byte[] dstBytes)

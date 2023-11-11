@@ -1,13 +1,65 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO.Compression;
 using System.Linq;
+using K4os.Compression.LZ4;
 
 namespace DotCompressorBenchmark.Tools;
 
 public static class Benchmarks
 {
-    public static BenchmarkResult Start(string name, string filename, byte[] srcBytes, byte[] dstBytes, Func<byte[], byte[], long> compress, Func<byte[], long, byte[], long> decompress)
+    public static void Benchmark()
+    {
+        try
+        {
+            //R.ExtractAll();
+
+            var benchmakrs = new List<IBenchmark>();
+
+            benchmakrs.Add(new BenchmarkMemCopy());
+
+            benchmakrs.Add(new BenchmarkDotFastLZ(1));
+            benchmakrs.Add(new BenchmarkDotFastLZ(2));
+
+            benchmakrs.Add(new BenchmarkK4osLZ4(LZ4Level.L00_FAST));
+            benchmakrs.Add(new BenchmarkK4osLZ4(LZ4Level.L03_HC));
+            benchmakrs.Add(new BenchmarkK4osLZ4(LZ4Level.L09_HC));
+            benchmakrs.Add(new BenchmarkK4osLZ4(LZ4Level.L12_MAX));
+
+            benchmakrs.Add(new BenchmarkSystemZip(CompressionLevel.Fastest));
+            benchmakrs.Add(new BenchmarkSystemZip(CompressionLevel.Optimal));
+
+            var results = new List<BenchmarkResult>();
+            // foreach (var file in R.SourceFiles)
+            // {
+            //     var filepath = R.Find(Path.Combine(R.Prefix, file));
+            //     var srcBytes = R.ToBytes(filepath);
+            //     var dstBytes = new byte[srcBytes.Length * 2];
+            //
+            //     foreach (var benchmark in benchmakrs)
+            //     {
+            //         var result = benchmark.Start(file, srcBytes.ToArray(), dstBytes);
+            //         results.Add(result);
+            //
+            //         Console.WriteLine(result.ToString());
+            //     }
+            // }
+
+            Benchmarks.Print($"Benchmark", results);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+        finally
+        {
+            //R.DeleteAll();
+        }
+    }
+
+    public static BenchmarkResult Roundtrip(string name, string filename, byte[] srcBytes, byte[] dstBytes, Func<byte[], byte[], long> compress, Func<byte[], long, byte[], long> decompress)
     {
         var result = new BenchmarkResult();
         result.Name = name;
@@ -26,7 +78,6 @@ public static class Benchmarks
         result.Compression.ElapsedWatch.Stop();
 
         var decompInputLength = result.Compression.OutputBytes / result.Times;
-        //dstBytes.AsSpan(0, (int)(compressedResult.DestBytes / compressedResult.Times)).CopyTo(srcBytes);
 
         result.Decompression.ElapsedWatch = new Stopwatch();
         result.Decompression.ElapsedWatch.Start();
@@ -38,8 +89,6 @@ public static class Benchmarks
         }
 
         result.Decompression.ElapsedWatch.Stop();
-
-        //Console.WriteLine(result.ToString());
         return result;
     }
 
@@ -49,8 +98,6 @@ public static class Benchmarks
             .OrderByDescending(x => x.ComputeTotalSpeed())
             .ToList();
 
-
-        // 각 열의 최대 길이를 찾기 위한 작업
         int[] widths = new int[BenchmarkResult.CollSize];
         for (int i = 0; i < rows.Count; i++)
         {
@@ -81,7 +128,6 @@ public static class Benchmarks
         Console.WriteLine();
 
 
-        // 표 출력
         Console.WriteLine("| " +
                           headName + new string(' ', widths[0] - headName.Length) + "| " +
                           headFilename + new string(' ', widths[1] - headFilename.Length) + "| " +
