@@ -12,4 +12,11 @@
     <PackageReference Include="EasyCompressor.LZ4" Version="1.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include=".github\release-drafter.yml" />
+    <Content Include=".github\workflows\dotnet.yml" />
+    <Content Include=".github\workflows\publish.yml" />
+    <Content Include=".github\workflows\release.yml" />
+  </ItemGroup>
+
 </Project>
