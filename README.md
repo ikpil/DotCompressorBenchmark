@@ -3,6 +3,7 @@
 [![CodeQL](https://github.com/ikpil/DotCompressorBenchmark/actions/workflows/codeql.yml/badge.svg)](https://github.com/ikpil/DotCompressorBenchmark/actions/workflows/codeql.yml)
 ![Repo Size](https://img.shields.io/github/repo-size/ikpil/DotCompressorBenchmark.svg?colorB=lightgray)
 ![Languages](https://img.shields.io/github/languages/top/ikpil/DotCompressorBenchmark)
+[![Visitors](https://api.visitorbadge.io/api/daily?path=https%3A%2F%2Fgithub.com%2Fikpil%2FDotCompressorBenchmark&countColor=%23263759&style=flat-square)](https://visitorbadge.io/status?path=https%3A%2F%2Fgithub.com%2Fikpil%2FDotCompressorBenchmark)
 
 ## Introduction 
 dcbench is an in-memory benchmark of .net compressors
