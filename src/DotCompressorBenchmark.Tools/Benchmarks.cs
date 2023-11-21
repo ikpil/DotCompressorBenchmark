@@ -46,18 +46,22 @@ public static class Benchmarks
             // FastLZ
             benchmarks.Add(new BenchmarkDotFastLZ(1));
             benchmarks.Add(new BenchmarkDotFastLZ(2));
-
+            
             // LZ4
             foreach (LZ4Level value in Enum.GetValues(typeof(LZ4Level)))
             {
                 benchmarks.Add(new BenchmarkK4osLZ4(value));
             }
-
+            
             // Zip
             foreach (CompressionLevel value in Enum.GetValues(typeof(CompressionLevel)))
             {
-                benchmarks.Add(new BenchmarkSystemZip(value));
+                benchmarks.Add(new BenchmarkZip(value));
             }
+            
+            // GZip
+            benchmarks.Add(new BenchmarkGZip());
+            
 
             var results = new List<BenchmarkResult>();
             foreach (var file in files)

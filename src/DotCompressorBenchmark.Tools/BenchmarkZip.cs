@@ -28,13 +28,13 @@ using System.IO.Compression;
 
 namespace DotCompressorBenchmark.Tools;
 
-public class BenchmarkSystemZip : IBenchmark
+public class BenchmarkZip : IBenchmark
 {
     public string Name { get; }
 
     private readonly CompressionLevel _level;
 
-    public BenchmarkSystemZip(CompressionLevel level)
+    public BenchmarkZip(CompressionLevel level)
     {
         _level = level;
         Name = $"System.Io.Zip {_level.ToString()}";
