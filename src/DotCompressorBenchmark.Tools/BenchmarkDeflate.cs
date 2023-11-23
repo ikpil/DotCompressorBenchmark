@@ -3,16 +3,15 @@ using System.IO.Compression;
 
 namespace DotCompressorBenchmark.Tools;
 
-public class BenchmarkGZip : IBenchmark
+public class BenchmarkDeflate : IBenchmark
 {
     public string Name { get; }
-
     private readonly CompressionLevel _level;
 
-    public BenchmarkGZip(CompressionLevel level)
+    public BenchmarkDeflate(CompressionLevel level)
     {
         _level = level;
-        Name = $"GZip {_level.ToString()}";
+        Name = $"Deflate {_level.ToString()}";
     }
 
     public BenchmarkResult Roundtrip(string filename, byte[] srcBytes, byte[] dstBytes)
@@ -23,7 +22,7 @@ public class BenchmarkGZip : IBenchmark
     public static long CompressGZip(byte[] uncompressedBytes, byte[] compressedBytes, CompressionLevel level)
     {
         using MemoryStream ms = new MemoryStream(compressedBytes);
-        using (GZipStream gzipStream = new GZipStream(ms, level, true))
+        using (DeflateStream gzipStream = new DeflateStream(ms, level, true))
         {
             gzipStream.Write(uncompressedBytes, 0, uncompressedBytes.Length);
         }
@@ -34,9 +33,7 @@ public class BenchmarkGZip : IBenchmark
     public static long DecompressGZip(byte[] compressedBytes, long size, byte[] uncompressedBytes)
     {
         using MemoryStream ms = new MemoryStream(compressedBytes, 0, (int)size);
-        using (GZipStream gzipStream = new GZipStream(ms, CompressionMode.Decompress))
-        {
-            return gzipStream.Read(uncompressedBytes);
-        }
+        using DeflateStream gzipStream = new DeflateStream(ms, CompressionMode.Decompress);
+        return gzipStream.Read(uncompressedBytes);
     }
 }

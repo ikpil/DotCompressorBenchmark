@@ -43,24 +43,31 @@ public static class Benchmarks
             // MemCopy
             benchmarks.Add(new BenchmarkMemCopy());
 
-            // FastLZ
-            benchmarks.Add(new BenchmarkDotFastLZ(1));
-            benchmarks.Add(new BenchmarkDotFastLZ(2));
+            // // FastLZ
+            // benchmarks.Add(new BenchmarkDotFastLZ(1));
+            // benchmarks.Add(new BenchmarkDotFastLZ(2));
+            //
+            // // LZ4
+            // foreach (LZ4Level value in Enum.GetValues(typeof(LZ4Level)))
+            // {
+            //     benchmarks.Add(new BenchmarkK4osLZ4(value));
+            // }
+            //
+            // // Zip
+            // benchmarks.Add(new BenchmarkZip(CompressionLevel.Optimal));
+            // benchmarks.Add(new BenchmarkZip(CompressionLevel.Fastest));
+            // benchmarks.Add(new BenchmarkZip(CompressionLevel.SmallestSize));
+            //
+            // // GZip
+            // benchmarks.Add(new BenchmarkGZip(CompressionLevel.Optimal));
+            // benchmarks.Add(new BenchmarkGZip(CompressionLevel.Fastest));
+            // benchmarks.Add(new BenchmarkGZip(CompressionLevel.SmallestSize));
             
-            // LZ4
-            foreach (LZ4Level value in Enum.GetValues(typeof(LZ4Level)))
-            {
-                benchmarks.Add(new BenchmarkK4osLZ4(value));
-            }
-            
-            // Zip
-            foreach (CompressionLevel value in Enum.GetValues(typeof(CompressionLevel)))
-            {
-                benchmarks.Add(new BenchmarkZip(value));
-            }
-            
-            // GZip
-            benchmarks.Add(new BenchmarkGZip());
+            // Deflate
+            benchmarks.Add(new BenchmarkDeflate(CompressionLevel.Optimal));
+            benchmarks.Add(new BenchmarkDeflate(CompressionLevel.Fastest));
+            benchmarks.Add(new BenchmarkDeflate(CompressionLevel.SmallestSize));
+
             
 
             var results = new List<BenchmarkResult>();
