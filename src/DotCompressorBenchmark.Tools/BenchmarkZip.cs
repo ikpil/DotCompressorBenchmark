@@ -37,7 +37,7 @@ public class BenchmarkZip : IBenchmark
     public BenchmarkZip(CompressionLevel level)
     {
         _level = level;
-        Name = $"System.Io.Zip {_level.ToString()}";
+        Name = $"Zip {_level.ToString()}";
     }
 
     public BenchmarkResult Roundtrip(string filename, byte[] srcBytes, byte[] dstBytes)
