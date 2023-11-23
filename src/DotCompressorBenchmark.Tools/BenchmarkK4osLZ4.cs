@@ -58,17 +58,17 @@ public class BenchmarkK4osLZ4 : IBenchmark
     public BenchmarkResult Roundtrip(string filename, byte[] srcBytes, byte[] dstBytes)
     {
         return Benchmarks.Roundtrip(Name, filename, srcBytes, dstBytes,
-            (s, d) => CompressK4osLZ4(s, d, _level), DecompressK4osLZ4);
+            (s, d) => Compress(s, d, _level), Decompress);
     }
 
-    private static long CompressK4osLZ4(byte[] srcBytes, byte[] dstBytes, LZ4Level level)
+    public static long Compress(byte[] srcBytes, byte[] dstBytes, LZ4Level level)
     {
         var writer = new FixedArrayBufferWriter<byte>(dstBytes);
         LZ4Pickler.Pickle(srcBytes, writer, level);
         return writer.WrittenCount;
     }
 
-    private static long DecompressK4osLZ4(byte[] srcBytes, long size, byte[] dstBytes)
+    public static long Decompress(byte[] srcBytes, long size, byte[] dstBytes)
     {
         var writer = new FixedArrayBufferWriter<byte>(dstBytes);
         LZ4Pickler.Unpickle(srcBytes.AsSpan(0, (int)size), writer);

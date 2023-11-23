@@ -17,10 +17,10 @@ public class BenchmarkGZip : IBenchmark
 
     public BenchmarkResult Roundtrip(string filename, byte[] srcBytes, byte[] dstBytes)
     {
-        return Benchmarks.Roundtrip(Name, filename, srcBytes, dstBytes, (s, d) => CompressGZip(s, d, _level), DecompressGZip);
+        return Benchmarks.Roundtrip(Name, filename, srcBytes, dstBytes, (s, d) => Compress(s, d, _level), Decompress);
     }
 
-    public static long CompressGZip(byte[] uncompressedBytes, byte[] compressedBytes, CompressionLevel level)
+    public static long Compress(byte[] uncompressedBytes, byte[] compressedBytes, CompressionLevel level)
     {
         using MemoryStream ms = new MemoryStream(compressedBytes);
         using (GZipStream gzipStream = new GZipStream(ms, level, true))
@@ -31,12 +31,10 @@ public class BenchmarkGZip : IBenchmark
         return ms.Position;
     }
 
-    public static long DecompressGZip(byte[] compressedBytes, long size, byte[] uncompressedBytes)
+    public static long Decompress(byte[] compressedBytes, long size, byte[] uncompressedBytes)
     {
         using MemoryStream ms = new MemoryStream(compressedBytes, 0, (int)size);
-        using (GZipStream gzipStream = new GZipStream(ms, CompressionMode.Decompress))
-        {
-            return gzipStream.Read(uncompressedBytes);
-        }
+        using GZipStream gzipStream = new GZipStream(ms, CompressionMode.Decompress);
+        return gzipStream.Read(uncompressedBytes);
     }
 }

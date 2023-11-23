@@ -42,10 +42,10 @@ public class BenchmarkZip : IBenchmark
 
     public BenchmarkResult Roundtrip(string filename, byte[] srcBytes, byte[] dstBytes)
     {
-        return Benchmarks.Roundtrip(Name, filename, srcBytes, dstBytes, (s, d) => CompressZip(s, d, _level), DecompressZip);
+        return Benchmarks.Roundtrip(Name, filename, srcBytes, dstBytes, (s, d) => Compress(s, d, _level), Decompress);
     }
 
-    private static long CompressZip(byte[] srcBytes, byte[] dstBytes, CompressionLevel level)
+    public static long Compress(byte[] srcBytes, byte[] dstBytes, CompressionLevel level)
     {
         using var ms = new MemoryStream();
         using (var zip = new ZipArchive(ms, ZipArchiveMode.Create))
@@ -60,7 +60,7 @@ public class BenchmarkZip : IBenchmark
         return ssss.Length;
     }
 
-    private static long DecompressZip(byte[] srcBytes, long size, byte[] dstBytes)
+    public static long Decompress(byte[] srcBytes, long size, byte[] dstBytes)
     {
         using var readStream = new MemoryStream(srcBytes, 0, (int)size);
         using var zip = new ZipArchive(readStream, ZipArchiveMode.Read);

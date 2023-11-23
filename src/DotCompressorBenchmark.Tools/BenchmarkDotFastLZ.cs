@@ -40,24 +40,21 @@ public class BenchmarkDotFastLZ : IBenchmark
 
     public BenchmarkResult Roundtrip(string filename, byte[] srcBytes, byte[] dstBytes)
     {
-        var compress = CompressDotFastLZL1;
-        if (_level == 2)
-            compress = CompressDotFastLZL2;
-
-        return Benchmarks.Roundtrip(Name, filename, srcBytes, dstBytes, compress, DecompressDotFastLZ);
+        return Benchmarks.Roundtrip(Name, filename, srcBytes, dstBytes, (s, d) => Compress(s, d, _level), Decompress);
     }
 
-    private static long CompressDotFastLZL1(byte[] srcBytes, byte[] dstBytes)
+    private static long Compress(byte[] srcBytes, byte[] dstBytes, int level)
     {
+        if (2 == level)
+        {
+            return FastLZ.CompressLevel2(srcBytes, 0, srcBytes.Length, dstBytes);
+        }
+
         return FastLZ.CompressLevel1(srcBytes, 0, srcBytes.Length, dstBytes);
     }
 
-    private static long CompressDotFastLZL2(byte[] srcBytes, byte[] dstBytes)
-    {
-        return FastLZ.CompressLevel2(srcBytes, 0, srcBytes.Length, dstBytes);
-    }
 
-    private static long DecompressDotFastLZ(byte[] srcBytes, long size, byte[] dstBytes)
+    private static long Decompress(byte[] srcBytes, long size, byte[] dstBytes)
     {
         return FastLZ.Decompress(srcBytes, size, dstBytes, dstBytes.Length);
     }
