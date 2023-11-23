@@ -3,15 +3,15 @@ using System.IO.Compression;
 
 namespace DotCompressorBenchmark.Tools;
 
-public class BenchmarkDeflate : IBenchmark
+public class BenchmarkBrotli : IBenchmark
 {
     public string Name { get; }
     private readonly CompressionLevel _level;
 
-    public BenchmarkDeflate(CompressionLevel level)
+    public BenchmarkBrotli(CompressionLevel level)
     {
         _level = level;
-        Name = $"Deflate {_level.ToString()}";
+        Name = $"Brotli {_level.ToString()}";
     }
 
     public BenchmarkResult Roundtrip(string filename, byte[] srcBytes, byte[] dstBytes)
@@ -22,7 +22,7 @@ public class BenchmarkDeflate : IBenchmark
     public static long Compress(byte[] uncompressedBytes, byte[] compressedBytes, CompressionLevel level)
     {
         using MemoryStream ms = new MemoryStream(compressedBytes);
-        using (DeflateStream gzipStream = new DeflateStream(ms, level, true))
+        using (BrotliStream gzipStream = new BrotliStream(ms, level, true))
         {
             gzipStream.Write(uncompressedBytes, 0, uncompressedBytes.Length);
         }
@@ -33,7 +33,7 @@ public class BenchmarkDeflate : IBenchmark
     public static long Decompress(byte[] compressedBytes, long size, byte[] uncompressedBytes)
     {
         using MemoryStream ms = new MemoryStream(compressedBytes, 0, (int)size);
-        using DeflateStream gzipStream = new DeflateStream(ms, CompressionMode.Decompress);
+        using BrotliStream gzipStream = new BrotliStream(ms, CompressionMode.Decompress);
         return gzipStream.Read(uncompressedBytes);
     }
 }
