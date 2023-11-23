@@ -22,23 +22,30 @@ $ ./dcbench compression-corpus/silesia/silesia.tar
 
 ### Benchmark ###
 
-| Name                        | Filename    | File kB   | Comp. MB/s | Decomp. MB/s | Rate   |
-|-----------------------------|-------------|-----------|------------|--------------|--------|
-| memcpy                      | silesia.tar | 206981.00 | 9013.10    | 15519.73     | 100.00 |
-| System.Io.Zip NoCompression | silesia.tar | 206981.00 | 1211.10    | 7685.98      | 100.00 |
-| K4os.LZ LL00_FAST           | silesia.tar | 206981.00 | 159.84     | 2428.60      | 47.60  |
-| K4os.LZ LL07_HC             | silesia.tar | 206981.00 | 13.37      | 2406.43      | 36.85  |
-| K4os.LZ LL06_HC             | silesia.tar | 206981.00 | 15.71      | 2345.71      | 36.98  |
-| K4os.LZ LL08_HC             | silesia.tar | 206981.00 | 11.52      | 2313.41      | 36.78  |
-| K4os.LZ LL05_HC             | silesia.tar | 206981.00 | 18.54      | 2298.53      | 37.22  |
-| K4os.LZ LL04_HC             | silesia.tar | 206981.00 | 22.03      | 2269.07      | 37.65  |
-| K4os.LZ LL03_HC             | silesia.tar | 206981.00 | 26.10      | 2228.36      | 38.38  |
-| K4os.LZ LL11_OPT            | silesia.tar | 206981.00 | 4.23       | 2202.40      | 36.48  |
-| K4os.LZ LL09_HC             | silesia.tar | 206981.00 | 9.77       | 2187.10      | 36.75  |
-| K4os.LZ LL12_MAX            | silesia.tar | 206981.00 | 3.30       | 2184.73      | 36.45  |
-| K4os.LZ LL10_OPT            | silesia.tar | 206981.00 | 6.60       | 2156.66      | 36.61  |
-| DotFastLZ L1                | silesia.tar | 206981.00 | 71.47      | 375.59       | 49.00  |
-| DotFastLZ L2                | silesia.tar | 206981.00 | 71.96      | 369.80       | 47.25  |
-| System.Io.Zip Optimal       | silesia.tar | 206981.00 | 13.36      | 409.62       | 32.25  |
-| System.Io.Zip Fastest       | silesia.tar | 206981.00 | 33.92      | 376.51       | 35.80  |
-| System.Io.Zip SmallestSize  | silesia.tar | 206981.00 | 4.44       | 405.82       | 31.92  |
+| Name              | Filename    | File kB   | Comp. MB/s | Decomp. MB/s | Rate   |
+|-------------------|-------------|-----------|------------|--------------|--------|
+| memcpy            | silesia.tar | 206981.00 | 8089.94    | 12647.54     | 100.00 |
+| K4os.LZ LL00_FAST | silesia.tar | 206981.00 | 166.41     | 2447.12      | 47.60  |
+| K4os.LZ LL05_HC   | silesia.tar | 206981.00 | 18.94      | 2367.06      | 37.22  |
+| K4os.LZ LL07_HC   | silesia.tar | 206981.00 | 13.51      | 2372.34      | 36.85  |
+| K4os.LZ LL06_HC   | silesia.tar | 206981.00 | 15.96      | 2315.96      | 36.98  |
+| K4os.LZ LL08_HC   | silesia.tar | 206981.00 | 11.62      | 2298.78      | 36.78  |
+| K4os.LZ LL04_HC   | silesia.tar | 206981.00 | 21.90      | 2250.96      | 37.65  |
+| K4os.LZ LL12_MAX  | silesia.tar | 206981.00 | 3.49       | 2257.13      | 36.45  |
+| K4os.LZ LL11_OPT  | silesia.tar | 206981.00 | 4.42       | 2254.14      | 36.48  |
+| K4os.LZ LL10_OPT  | silesia.tar | 206981.00 | 7.31       | 2232.03      | 36.61  |
+| K4os.LZ LL03_HC   | silesia.tar | 206981.00 | 26.27      | 2179.22      | 38.38  |
+| K4os.LZ LL09_HC   | silesia.tar | 206981.00 | 10.09      | 2195.35      | 36.75  |
+| DotFastLZ L1      | silesia.tar | 206981.00 | 68.49      | 377.43       | 49.00  |
+| DotFastLZ L2      | silesia.tar | 206981.00 | 70.36      | 367.11       | 47.25  |
+| Zip Optimal       | silesia.tar | 206981.00 | 13.66      | 414.94       | 32.25  |
+| Zip Fastest       | silesia.tar | 206981.00 | 34.39      | 381.53       | 35.80  |
+| Brotli Fastest    | silesia.tar | 206981.00 | 88.58      | 230.17       | 34.65  |
+| Deflate Fastest   | silesia.tar | 206981.00 | 36.06      | 239.78       | 35.80  |
+| GZip Fastest      | silesia.tar | 206981.00 | 35.94      | 237.97       | 35.80  |
+| ZLib Fastest      | silesia.tar | 206981.00 | 35.03      | 232.71       | 35.80  |
+| Brotli Optimal    | silesia.tar | 206981.00 | 22.67      | 237.83       | 30.30  |
+| GZip Optimal      | silesia.tar | 206981.00 | 14.01      | 117.18       | 32.25  |
+| Deflate Optimal   | silesia.tar | 206981.00 | 14.03      | 115.28       | 32.25  |
+| ZLib Optimal      | silesia.tar | 206981.00 | 13.76      | 107.26       | 32.25  |
+
