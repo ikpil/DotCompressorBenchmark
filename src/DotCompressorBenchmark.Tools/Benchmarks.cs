@@ -78,6 +78,8 @@ public static class Benchmarks
             benchmarks.Add(new BenchmarkZLib(CompressionLevel.Fastest));
             //benchmarks.Add(new BenchmarkZLib(CompressionLevel.SmallestSize));
 
+            benchmarks.Add(new BenchmarkSnappy());
+
             var results = new List<BenchmarkResult>();
             foreach (var file in files)
             {
