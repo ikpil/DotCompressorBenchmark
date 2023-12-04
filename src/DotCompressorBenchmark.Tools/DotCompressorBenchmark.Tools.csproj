@@ -9,8 +9,8 @@
   <ItemGroup>
     <PackageReference Include="DotFastLZ.Compression" Version="2023.10.5" />
     <PackageReference Include="K4os.Compression.LZ4" Version="1.3.6" />
-    <PackageReference Include="EasyCompressor.LZ4" Version="1.4.0" />
     <PackageReference Include="Snappier" Version="1.1.3" />
+    <PackageReference Include="LZMA-SDK" Version="22.1.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,5 +19,4 @@
     <Content Include=".github\workflows\publish.yml" />
     <Content Include=".github\workflows\release.yml" />
   </ItemGroup>
-
 </Project>

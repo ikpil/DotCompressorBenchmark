@@ -46,39 +46,46 @@ public static class Benchmarks
             // FastLZ
             benchmarks.Add(new BenchmarkDotFastLZ(1));
             benchmarks.Add(new BenchmarkDotFastLZ(2));
-
+            
             // LZ4
             foreach (LZ4Level value in Enum.GetValues(typeof(LZ4Level)))
             {
                 benchmarks.Add(new BenchmarkK4osLZ4(value));
             }
-
+            
             // Zip
             benchmarks.Add(new BenchmarkZip(CompressionLevel.Optimal));
             benchmarks.Add(new BenchmarkZip(CompressionLevel.Fastest));
             //benchmarks.Add(new BenchmarkZip(CompressionLevel.SmallestSize));
-
+            
             // GZip
             benchmarks.Add(new BenchmarkGZip(CompressionLevel.Optimal));
             benchmarks.Add(new BenchmarkGZip(CompressionLevel.Fastest));
             //benchmarks.Add(new BenchmarkGZip(CompressionLevel.SmallestSize));
-
+            
             // Deflate
             benchmarks.Add(new BenchmarkDeflate(CompressionLevel.Optimal));
             benchmarks.Add(new BenchmarkDeflate(CompressionLevel.Fastest));
             //benchmarks.Add(new BenchmarkDeflate(CompressionLevel.SmallestSize));
-
+            
             // Brotli
             benchmarks.Add(new BenchmarkBrotli(CompressionLevel.Optimal));
             benchmarks.Add(new BenchmarkBrotli(CompressionLevel.Fastest));
             //benchmarks.Add(new BenchmarkBrotli(CompressionLevel.SmallestSize));
-
+            
             // ZLib
             benchmarks.Add(new BenchmarkZLib(CompressionLevel.Optimal));
             benchmarks.Add(new BenchmarkZLib(CompressionLevel.Fastest));
             //benchmarks.Add(new BenchmarkZLib(CompressionLevel.SmallestSize));
-
+            
             benchmarks.Add(new BenchmarkSnappy());
+            
+            // LZMA
+            benchmarks.Add(new BenchmarkLZMA(0));
+            benchmarks.Add(new BenchmarkLZMA(2));
+            benchmarks.Add(new BenchmarkLZMA(4));
+            benchmarks.Add(new BenchmarkLZMA(5));
+            benchmarks.Add(new BenchmarkLZMA(9));
 
             var results = new List<BenchmarkResult>();
             foreach (var file in files)
@@ -118,7 +125,7 @@ public static class Benchmarks
         var result = new BenchmarkResult();
         result.Name = name;
         result.FileName = Path.GetFileName(filename);
-        result.Times = 5;
+        result.Times = 3;
         result.SourceByteLength = srcBytes.Length;
         result.Compression.ElapsedWatch = new Stopwatch();
         result.Compression.ElapsedWatch.Start();
