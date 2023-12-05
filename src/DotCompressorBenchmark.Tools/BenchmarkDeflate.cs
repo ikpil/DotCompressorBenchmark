@@ -11,7 +11,7 @@ public class BenchmarkDeflate : IBenchmark
     public BenchmarkDeflate(CompressionLevel level)
     {
         _level = level;
-        Name = $"Deflate {_level.ToString()}";
+        Name = $"deflate -{_level.ToString()}";
     }
 
     public BenchmarkResult Roundtrip(string filename, byte[] srcBytes, byte[] dstBytes)

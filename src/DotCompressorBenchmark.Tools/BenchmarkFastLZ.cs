@@ -26,15 +26,15 @@ using DotFastLZ.Compression;
 
 namespace DotCompressorBenchmark.Tools;
 
-public class BenchmarkDotFastLZ : IBenchmark
+public class BenchmarkFastLZ : IBenchmark
 {
     public string Name { get; }
 
     private readonly int _level;
 
-    public BenchmarkDotFastLZ(int level)
+    public BenchmarkFastLZ(int level)
     {
-        Name = $"DotFastLZ L{level}";
+        Name = $"fastlz -{level}";
         _level = level;
     }
 

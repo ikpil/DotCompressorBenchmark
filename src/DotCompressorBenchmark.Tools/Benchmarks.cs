@@ -44,42 +44,43 @@ public static class Benchmarks
             benchmarks.Add(new BenchmarkMemCopy());
 
             // FastLZ
-            benchmarks.Add(new BenchmarkDotFastLZ(1));
-            benchmarks.Add(new BenchmarkDotFastLZ(2));
-            
+            benchmarks.Add(new BenchmarkFastLZ(1));
+            benchmarks.Add(new BenchmarkFastLZ(2));
+
             // LZ4
-            foreach (LZ4Level value in Enum.GetValues(typeof(LZ4Level)))
-            {
-                benchmarks.Add(new BenchmarkK4osLZ4(value));
-            }
-            
+            benchmarks.Add(new BenchmarkLZ4(LZ4Level.L00_FAST));
+            benchmarks.Add(new BenchmarkLZ4(LZ4Level.L03_HC));
+            benchmarks.Add(new BenchmarkLZ4(LZ4Level.L06_HC));
+            benchmarks.Add(new BenchmarkLZ4(LZ4Level.L09_HC));
+            benchmarks.Add(new BenchmarkLZ4(LZ4Level.L12_MAX));
+
             // Zip
             benchmarks.Add(new BenchmarkZip(CompressionLevel.Optimal));
             benchmarks.Add(new BenchmarkZip(CompressionLevel.Fastest));
             //benchmarks.Add(new BenchmarkZip(CompressionLevel.SmallestSize));
-            
+
             // GZip
             benchmarks.Add(new BenchmarkGZip(CompressionLevel.Optimal));
             benchmarks.Add(new BenchmarkGZip(CompressionLevel.Fastest));
             //benchmarks.Add(new BenchmarkGZip(CompressionLevel.SmallestSize));
-            
+
             // Deflate
             benchmarks.Add(new BenchmarkDeflate(CompressionLevel.Optimal));
             benchmarks.Add(new BenchmarkDeflate(CompressionLevel.Fastest));
             //benchmarks.Add(new BenchmarkDeflate(CompressionLevel.SmallestSize));
-            
+
             // Brotli
             benchmarks.Add(new BenchmarkBrotli(CompressionLevel.Optimal));
             benchmarks.Add(new BenchmarkBrotli(CompressionLevel.Fastest));
             //benchmarks.Add(new BenchmarkBrotli(CompressionLevel.SmallestSize));
-            
+
             // ZLib
             benchmarks.Add(new BenchmarkZLib(CompressionLevel.Optimal));
             benchmarks.Add(new BenchmarkZLib(CompressionLevel.Fastest));
             //benchmarks.Add(new BenchmarkZLib(CompressionLevel.SmallestSize));
-            
+
             benchmarks.Add(new BenchmarkSnappy());
-            
+
             // LZMA
             benchmarks.Add(new BenchmarkLZMA(0));
             benchmarks.Add(new BenchmarkLZMA(2));
@@ -126,7 +127,7 @@ public static class Benchmarks
         result.Name = name;
         result.FileName = Path.GetFileName(filename);
         result.Times = 3;
-        result.SourceByteLength = srcBytes.Length;
+        result.SourceSize = srcBytes.Length;
         result.Compression.ElapsedWatch = new Stopwatch();
         result.Compression.ElapsedWatch.Start();
         for (int i = 0; i < result.Times; ++i)
@@ -159,61 +160,46 @@ public static class Benchmarks
             .OrderByDescending(x => x.ComputeTotalSpeed())
             .ToList();
 
-        int[] widths = new int[BenchmarkResult.CollSize];
+        int[] widths = new int[BenchmarkResult.ColumnNames.Length];
         for (int i = 0; i < rows.Count; i++)
         {
             widths[0] = Math.Max(rows[i].Name.Length, widths[0]);
-            widths[1] = Math.Max(rows[i].FileName.Length, widths[1]);
-            widths[2] = Math.Max(rows[i].ToSourceKbString().Length, widths[2]);
-            widths[3] = Math.Max(rows[i].Compression.ToSpeedString().Length, widths[3]);
-            widths[4] = Math.Max(rows[i].Decompression.ToSpeedString().Length, widths[4]);
-            widths[5] = Math.Max(rows[i].Compression.ToRateString().Length, widths[5]);
+            widths[1] = Math.Max(rows[i].Compression.ToSpeedString().Length, widths[1]);
+            widths[2] = Math.Max(rows[i].Decompression.ToSpeedString().Length, widths[2]);
+            widths[3] = Math.Max(rows[i].GetCompressedSize().ToString().Length, widths[3]);
+            widths[4] = Math.Max(rows[i].Compression.ToRatioString().Length, widths[4]);
+            widths[5] = Math.Max(rows[i].FileName.Length, widths[5]);
+            widths[6] = Math.Max(rows[i].GetSourceSize().ToString().Length, widths[6]);
         }
 
-        var headName = "Name";
-        var headFilename = "Filename";
-        var headFileSize = "File kB";
-        var headCompMbs = "Comp. MB/s";
-        var headDecompMbs = "Decomp. MB/s";
-        var headRate = "Rate";
-
-        widths[0] = Math.Max(widths[0], headName.Length) + 1;
-        widths[1] = Math.Max(widths[1], headFilename.Length) + 1;
-        widths[2] = Math.Max(widths[2], headFileSize.Length) + 1;
-        widths[3] = Math.Max(widths[3], headCompMbs.Length) + 1;
-        widths[4] = Math.Max(widths[4], headDecompMbs.Length) + 1;
-        widths[5] = Math.Max(widths[5], headRate.Length) + 1;
+        for (int i = 0; i < BenchmarkResult.ColumnNames.Length; ++i)
+        {
+            widths[i] = Math.Max(widths[i], BenchmarkResult.ColumnNames[i].Length) + 1;
+        }
 
         Console.WriteLine();
         Console.WriteLine($"### {headline} ###");
         Console.WriteLine();
 
 
-        Console.WriteLine("| " +
-                          headName + new string(' ', widths[0] - headName.Length) + "| " +
-                          headFilename + new string(' ', widths[1] - headFilename.Length) + "| " +
-                          headFileSize + new string(' ', widths[2] - headFileSize.Length) + "| " +
-                          headCompMbs + new string(' ', widths[3] - headCompMbs.Length) + "| " +
-                          headDecompMbs + new string(' ', widths[4] - headDecompMbs.Length) + "| " +
-                          headRate + new string(' ', widths[5] - headRate.Length) + "|");
-        Console.WriteLine("|-" +
-                          new string('-', widths[0]) + "|-" +
-                          new string('-', widths[1]) + "|-" +
-                          new string('-', widths[2]) + "|-" +
-                          new string('-', widths[3]) + "|-" +
-                          new string('-', widths[4]) + "|-" +
-                          new string('-', widths[5]) + "|");
+        var viewColumnNames = BenchmarkResult.ColumnNames.Zip(widths).Select(x => x.First + new string(' ', x.Second - x.First.Length));
+        var columns = string.Join("| ", viewColumnNames);
+        Console.WriteLine($"| {columns}|");
+
+        var viewSeparators = widths.Select(x => new string('-', x));
+        var separators = string.Join("|-", viewSeparators);
+        Console.WriteLine($"|-{separators}|");
 
         foreach (var row in rows)
         {
-            Console.WriteLine(
-                "| " +
-                row.Name.PadRight(widths[0]) + "| " +
-                row.FileName.PadRight(widths[1]) + "| " +
-                row.ToSourceKbString().PadRight(widths[2]) + "| " +
-                row.Compression.ToSpeedString().PadRight(widths[3]) + "| " +
-                row.Decompression.ToSpeedString().PadRight(widths[4]) + "| " +
-                row.Compression.ToRateString().PadRight(widths[5]) + "|"
+            Console.WriteLine("| " +
+                              row.Name.PadRight(widths[0]) + "| " +
+                              row.Compression.ToSpeedString().PadRight(widths[1]) + "| " +
+                              row.Decompression.ToSpeedString().PadRight(widths[2]) + "| " +
+                              row.GetCompressedSize().ToString().PadRight(widths[3]) + "| " +
+                              row.Compression.ToRatioString().PadRight(widths[4]) + "| " +
+                              row.FileName.PadRight(widths[5]) + "| " +
+                              row.GetSourceSize().ToString().PadRight(widths[6]) + "|"
             );
         }
     }

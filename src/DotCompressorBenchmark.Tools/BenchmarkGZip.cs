@@ -12,7 +12,7 @@ public class BenchmarkGZip : IBenchmark
     public BenchmarkGZip(CompressionLevel level)
     {
         _level = level;
-        Name = $"GZip {_level.ToString()}";
+        Name = $"gzip -{_level.ToString()}";
     }
 
     public BenchmarkResult Roundtrip(string filename, byte[] srcBytes, byte[] dstBytes)

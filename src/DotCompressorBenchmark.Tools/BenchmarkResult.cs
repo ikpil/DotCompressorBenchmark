@@ -22,15 +22,19 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 
+using System.Collections.Immutable;
+
 namespace DotCompressorBenchmark.Tools;
 
 public class BenchmarkResult
 {
-    public const int CollSize = 6;
+    public static readonly ImmutableArray<string> ColumnNames = ImmutableArray.Create(
+        "Name", "Comp. MB/s", "Decomp. MB/s", "Compr.Size", "Ratio", "Filename", "File size"
+    );
 
     public string Name;
     public string FileName;
-    public long SourceByteLength;
+    public long SourceSize;
 
     public int Times;
     public BenchmarkSpeed Compression;
@@ -42,8 +46,8 @@ public class BenchmarkResult
         result += $"{Name}\n";
         result += $"  - times: {Times}\n";
         result += $"  - filename : {FileName}\n";
-        result += $"  - source bytes: {ToSourceKbString()} kB/s\n";
-        result += $"  - compression bytes: {Compression.OutputBytes / Times}\n";
+        result += $"  - source size : {GetSourceSize()}\n";
+        result += $"  - compression size: {GetCompressedSize()}\n";
         result += $"  - compression rate: {Compression.ComputeRate():F2}%\n";
         result += $"  - compression speed: {Compression.ComputeSpeed():F2} MB/s\n";
         result += $"  - decompression speed: {Decompression.ComputeSpeed():F2} MB/s\n";
@@ -51,10 +55,14 @@ public class BenchmarkResult
         return result;
     }
 
-    public string ToSourceKbString()
+    public long GetSourceSize()
     {
-        double mb = (double)SourceByteLength / 1024;
-        return $"{mb:F2}";
+        return SourceSize;
+    }
+
+    public long GetCompressedSize()
+    {
+        return Compression.OutputBytes / Times;
     }
 
     public double ComputeTotalSpeed()

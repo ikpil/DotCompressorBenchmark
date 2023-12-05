@@ -10,7 +10,7 @@ public class BenchmarkSnappy : IBenchmark
 
     public BenchmarkSnappy()
     {
-        Name = $"Snappy";
+        Name = $"snappy";
     }
 
     public BenchmarkResult Roundtrip(string filename, byte[] srcBytes, byte[] dstBytes)

@@ -27,31 +27,23 @@ using K4os.Compression.LZ4;
 
 namespace DotCompressorBenchmark.Tools;
 
-public class BenchmarkK4osLZ4 : IBenchmark
+public class BenchmarkLZ4 : IBenchmark
 {
     public string Name { get; }
 
     private readonly LZ4Level _level;
 
-    public BenchmarkK4osLZ4(LZ4Level level)
+    public BenchmarkLZ4(LZ4Level level)
     {
         _level = level;
-        Name = $"K4os.LZ L{_level.ToString()}";
-
-        // // K4os LZ4
-        // var k4osL01 = Benchmark($"K4os.Compression.LZ4 L00", filename,
-        //     srcBytes.ToArray(), dstBytes, (s, d) => CompressK4osLZ4(s, d, LZ4Level.L00_FAST), DecompressK4osLZ4);
-        // var k4osL12 = Benchmark($"K4os.Compression.LZ4 L12", filename,
-        //     srcBytes.ToArray(), dstBytes, (s, d) => CompressK4osLZ4(s, d, LZ4Level.L12_MAX), DecompressK4osLZ4);
-        // var k4osL03HC = Benchmark($"K4os.Compression.LZ4 L03_HC", filename,
-        //     srcBytes.ToArray(), dstBytes, (s, d) => CompressK4osLZ4(s, d, LZ4Level.L03_HC), DecompressK4osLZ4);
-        // var k4osL09HC = Benchmark($"K4os.Compression.LZ4 L09_HC", filename,
-        //     srcBytes.ToArray(), dstBytes, (s, d) => CompressK4osLZ4(s, d, LZ4Level.L09_HC), DecompressK4osLZ4);
-        // results.Add(k4osL01);
-        // results.Add(k4osL12);
-        // results.Add(k4osL03HC);
-        // results.Add(k4osL09HC);
-        //
+        if (LZ4Level.L00_FAST == level)
+        {
+            Name = $"lz4fast -0";
+        }
+        else if (LZ4Level.L03_HC <= level && level <= LZ4Level.L12_MAX)
+        {
+            Name = $"lz4hc -{(int)level}";
+        }
     }
 
 

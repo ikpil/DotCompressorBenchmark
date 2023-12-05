@@ -38,7 +38,7 @@ public struct BenchmarkSpeed
         return OutputBytes / (double)InputBytes * 100;
     }
 
-    public string ToRateString()
+    public string ToRatioString()
     {
         return $"{ComputeRate():F2}";
     }

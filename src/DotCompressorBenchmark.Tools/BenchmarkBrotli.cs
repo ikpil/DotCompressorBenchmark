@@ -11,7 +11,7 @@ public class BenchmarkBrotli : IBenchmark
     public BenchmarkBrotli(CompressionLevel level)
     {
         _level = level;
-        Name = $"Brotli {_level.ToString()}";
+        Name = $"brotli -{_level.ToString()}";
     }
 
     public BenchmarkResult Roundtrip(string filename, byte[] srcBytes, byte[] dstBytes)

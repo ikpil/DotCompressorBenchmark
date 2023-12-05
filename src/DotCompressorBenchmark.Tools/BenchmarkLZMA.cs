@@ -13,7 +13,7 @@ public class BenchmarkLZMA : IBenchmark
     public BenchmarkLZMA(int level)
     {
         _level = level;
-        Name = $"LZMA 22.1.1 -{_level}";
+        Name = $"lzma 22.1.1 -{_level}";
     }
 
 
@@ -33,7 +33,7 @@ public class BenchmarkLZMA : IBenchmark
         outStream.Write(BitConverter.GetBytes((long)srcBytes.Length), 0, 8);
         encoder.Code(inStream, outStream, srcBytes.Length, dstBytes.Length, null);
 
-        return outStream.Position;
+        return outStream.Position - 5 - 8;
     }
 
     public static long Decompress(byte[] srcBytes, long size, byte[] dstBytes)
