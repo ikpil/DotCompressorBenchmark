@@ -8,7 +8,7 @@
 ## Introduction 
 dcbench is an in-memory benchmark of .net compressors
 
-## Usage: DotCompressorBenchmark.Tools ##
+## Usage: DotCompressorBenchmark.Tools
 ```shell
 $ ./dcbench --help
 dcbench: .net compressor benchmark tool 2023.11.11
@@ -20,7 +20,18 @@ Usage: dcbench [options] input-file
 $ ./dcbench compression-corpus/silesia/silesia.tar
 ```
 
-### Benchmark ###
+## Supported compressors
+- [fastlz](https://github.com/ikpil/DotFastLZ)
+- [lz4/lz4hc](https://github.com/MiloszKrajewski/K4os.Compression.LZ4)
+- [lzma](https://github.com/monemihir/LZMA-SDK)
+- [brotli](https://learn.microsoft.com/en-us/dotnet/api/system.io.compression.brotlistream)
+- [deflate](https://learn.microsoft.com/en-us/dotnet/api/system.io.compression.deflatestream)
+- [gzip](https://learn.microsoft.com/en-us/dotnet/api/system.io.compression.gzipstream)
+- [zlib](https://learn.microsoft.com/en-us/dotnet/api/system.io.compression.zlibstream)
+- [zip](https://learn.microsoft.com/en-us/dotnet/api/system.io.compression.ziparchive)
+- [snappy](https://github.com/brantburnett/Snappier)
+
+### Benchmark
 
 | Name              | Filename    | File kB   | Comp. MB/s | Decomp. MB/s | Rate   |
 |-------------------|-------------|-----------|------------|--------------|--------|
