@@ -11,7 +11,7 @@ public class BenchmarkZLib : IBenchmark
     public BenchmarkZLib(CompressionLevel level)
     {
         _level = level;
-        Name = $"ZLib {_level.ToString()}";
+        Name = $"zlib -{_level.ToString()}";
     }
 
     public BenchmarkResult Roundtrip(string filename, byte[] srcBytes, byte[] dstBytes)

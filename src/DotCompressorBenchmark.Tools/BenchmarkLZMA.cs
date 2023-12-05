@@ -33,7 +33,7 @@ public class BenchmarkLZMA : IBenchmark
         outStream.Write(BitConverter.GetBytes((long)srcBytes.Length), 0, 8);
         encoder.Code(inStream, outStream, srcBytes.Length, dstBytes.Length, null);
 
-        return outStream.Position - 5 - 8;
+        return outStream.Position;
     }
 
     public static long Decompress(byte[] srcBytes, long size, byte[] dstBytes)
