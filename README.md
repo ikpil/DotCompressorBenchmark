@@ -21,42 +21,47 @@ $ ./dcbench compression-corpus/silesia/silesia.tar
 ```
 
 ## Supported compressors
-- [fastlz](https://github.com/ikpil/DotFastLZ)
-- [lz4/lz4hc](https://github.com/MiloszKrajewski/K4os.Compression.LZ4)
-- [lzma](https://github.com/monemihir/LZMA-SDK)
-- [brotli](https://learn.microsoft.com/en-us/dotnet/api/system.io.compression.brotlistream)
-- [deflate](https://learn.microsoft.com/en-us/dotnet/api/system.io.compression.deflatestream)
-- [gzip](https://learn.microsoft.com/en-us/dotnet/api/system.io.compression.gzipstream)
-- [zlib](https://learn.microsoft.com/en-us/dotnet/api/system.io.compression.zlibstream)
-- [zip](https://learn.microsoft.com/en-us/dotnet/api/system.io.compression.ziparchive)
-- [snappy](https://github.com/brantburnett/Snappier)
+If you have any compression libraries you'd like to add, please let me know.
+
+- fastlz - [DotFastLZ](https://github.com/ikpil/DotFastLZ)
+- lz4/lz4hc - [K4os.Compression.LZ4](https://github.com/MiloszKrajewski/K4os.Compression.LZ4)
+- lzma - [LZMA-SDK](https://github.com/monemihir/LZMA-SDK)
+- brotli - [system.io.compression.brotlistream](https://learn.microsoft.com/en-us/dotnet/api/system.io.compression.brotlistream)
+- deflate - [system.io.compression.deflatestream](https://learn.microsoft.com/en-us/dotnet/api/system.io.compression.deflatestream)
+- gzip - [system.io.compression.gzipstream](https://learn.microsoft.com/en-us/dotnet/api/system.io.compression.gzipstream)
+- zlib - [system.io.compression.zlibstream](https://learn.microsoft.com/en-us/dotnet/api/system.io.compression.zlibstream)
+- zip - [system.io.compression.ziparchive](https://learn.microsoft.com/en-us/dotnet/api/system.io.compression.ziparchive)
+- snappy - [Snappier](https://github.com/brantburnett/Snappier)
 
 ### Benchmark
+- CPU : Ryzen 3600 single core
+- RAM : 64GB
 
-| Name              | Filename    | File kB   | Comp. MB/s | Decomp. MB/s | Rate   |
-|-------------------|-------------|-----------|------------|--------------|--------|
-| memcpy            | silesia.tar | 206981.00 | 8089.94    | 12647.54     | 100.00 |
-| K4os.LZ LL00_FAST | silesia.tar | 206981.00 | 166.41     | 2447.12      | 47.60  |
-| K4os.LZ LL05_HC   | silesia.tar | 206981.00 | 18.94      | 2367.06      | 37.22  |
-| K4os.LZ LL07_HC   | silesia.tar | 206981.00 | 13.51      | 2372.34      | 36.85  |
-| K4os.LZ LL06_HC   | silesia.tar | 206981.00 | 15.96      | 2315.96      | 36.98  |
-| K4os.LZ LL08_HC   | silesia.tar | 206981.00 | 11.62      | 2298.78      | 36.78  |
-| K4os.LZ LL04_HC   | silesia.tar | 206981.00 | 21.90      | 2250.96      | 37.65  |
-| K4os.LZ LL12_MAX  | silesia.tar | 206981.00 | 3.49       | 2257.13      | 36.45  |
-| K4os.LZ LL11_OPT  | silesia.tar | 206981.00 | 4.42       | 2254.14      | 36.48  |
-| K4os.LZ LL10_OPT  | silesia.tar | 206981.00 | 7.31       | 2232.03      | 36.61  |
-| K4os.LZ LL03_HC   | silesia.tar | 206981.00 | 26.27      | 2179.22      | 38.38  |
-| K4os.LZ LL09_HC   | silesia.tar | 206981.00 | 10.09      | 2195.35      | 36.75  |
-| DotFastLZ L1      | silesia.tar | 206981.00 | 68.49      | 377.43       | 49.00  |
-| DotFastLZ L2      | silesia.tar | 206981.00 | 70.36      | 367.11       | 47.25  |
-| Zip Optimal       | silesia.tar | 206981.00 | 13.66      | 414.94       | 32.25  |
-| Zip Fastest       | silesia.tar | 206981.00 | 34.39      | 381.53       | 35.80  |
-| Brotli Fastest    | silesia.tar | 206981.00 | 88.58      | 230.17       | 34.65  |
-| Deflate Fastest   | silesia.tar | 206981.00 | 36.06      | 239.78       | 35.80  |
-| GZip Fastest      | silesia.tar | 206981.00 | 35.94      | 237.97       | 35.80  |
-| ZLib Fastest      | silesia.tar | 206981.00 | 35.03      | 232.71       | 35.80  |
-| Brotli Optimal    | silesia.tar | 206981.00 | 22.67      | 237.83       | 30.30  |
-| GZip Optimal      | silesia.tar | 206981.00 | 14.01      | 117.18       | 32.25  |
-| Deflate Optimal   | silesia.tar | 206981.00 | 14.03      | 115.28       | 32.25  |
-| ZLib Optimal      | silesia.tar | 206981.00 | 13.76      | 107.26       | 32.25  |
+| Name             | Comp. MB/s | Decomp. MB/s | Compr.Size | Ratio   | Filename    | File size |
+|------------------|------------|--------------|------------|---------|-------------|-----------|
+| memcpy           | 7268.78    | 15795.43     | 211948544  | 100.00  | silesia.tar | 211948544 |
+| lz4fast -0       | 165.21     | 2423.67      | 100881461  | 47.60   | silesia.tar | 211948544 |
+| lz4hc -6         | 15.71      | 2406.49      | 78386370   | 36.98   | silesia.tar | 211948544 |
+| lz4hc -12        | 3.45       | 2366.64      | 77263302   | 36.45   | silesia.tar | 211948544 |
+| lz4hc -9         | 10.00      | 2356.09      | 77885122   | 36.75   | silesia.tar | 211948544 |
+| lz4hc -3         | 25.75      | 2222.53      | 81343053   | 38.38   | silesia.tar | 211948544 |
+| snappy           | 218.09     | 843.74       | 102380218  | 48.30   | silesia.tar | 211948544 |
+| fastlz -2        | 67.31      | 365.93       | 100147467  | 47.25   | silesia.tar | 211948544 |
+| zip -Optimal     | 13.28      | 402.57       | 68352124   | 32.25   | silesia.tar | 211948544 |
+| fastlz -1        | 66.13      | 346.14       | 103856237  | 49.00   | silesia.tar | 211948544 |
+| zip -Fastest     | 33.58      | 376.58       | 75887013   | 35.80   | silesia.tar | 211948544 |
+| brotli -Fastest  | 87.12      | 261.09       | 73444548   | 34.65   | silesia.tar | 211948544 |
+| deflate -Fastest | 35.66      | 210.66       | 75886907   | 35.80   | silesia.tar | 211948544 |
+| gzip -Fastest    | 35.48      | 206.51       | 75886925   | 35.80   | silesia.tar | 211948544 |
+| zlib -Fastest    | 34.31      | 163.11       | 75886913   | 35.80   | silesia.tar | 211948544 |
+| brotli -Optimal  | 20.37      | 176.39       | 64211140   | 30.30   | silesia.tar | 211948544 |
+| deflate -Optimal | 13.63      | 86.24        | 68352018   | 32.25   | silesia.tar | 211948544 |
+| gzip -Optimal    | 13.70      | 81.59        | 68352036   | 32.25   | silesia.tar | 211948544 |
+| zlib -Optimal    | 13.52      | 74.30        | 68352024   | 32.25   | silesia.tar | 211948544 |
+| lzma 22.1.1 -5   | 0.24       | 24.07        | 49743984   | 23.47   | silesia.tar | 211948544 |
+| lzma 22.1.1 -9   | 0.23       | 24.06        | 49564567   | 23.39   | silesia.tar | 211948544 |
+| lzma 22.1.1 -4   | 0.23       | 23.94        | 50444814   | 23.80   | silesia.tar | 211948544 |
+| lzma 22.1.1 -2   | 0.31       | 21.38        | 53730001   | 25.35   | silesia.tar | 211948544 |
+| lzma 22.1.1 -0   | 0.40       | 18.04        | 59953750   | 28.29   | silesia.tar | 211948544 |
+
 
