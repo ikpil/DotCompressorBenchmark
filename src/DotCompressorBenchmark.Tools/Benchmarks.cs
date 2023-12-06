@@ -42,43 +42,43 @@ public static class Benchmarks
 
             // MemCopy
             benchmarks.Add(new BenchmarkMemCopy());
-
+            
             // FastLZ
             benchmarks.Add(new BenchmarkFastLZ(1));
             benchmarks.Add(new BenchmarkFastLZ(2));
-
+            
             // LZ4
             benchmarks.Add(new BenchmarkLZ4(LZ4Level.L00_FAST));
             benchmarks.Add(new BenchmarkLZ4(LZ4Level.L03_HC));
             benchmarks.Add(new BenchmarkLZ4(LZ4Level.L06_HC));
             benchmarks.Add(new BenchmarkLZ4(LZ4Level.L09_HC));
             benchmarks.Add(new BenchmarkLZ4(LZ4Level.L12_MAX));
-
+            
             // Zip
             benchmarks.Add(new BenchmarkZip(CompressionLevel.Optimal));
             benchmarks.Add(new BenchmarkZip(CompressionLevel.Fastest));
             //benchmarks.Add(new BenchmarkZip(CompressionLevel.SmallestSize));
-
+            
             // GZip
             benchmarks.Add(new BenchmarkGZip(CompressionLevel.Optimal));
             benchmarks.Add(new BenchmarkGZip(CompressionLevel.Fastest));
             //benchmarks.Add(new BenchmarkGZip(CompressionLevel.SmallestSize));
-
+            
             // Deflate
             benchmarks.Add(new BenchmarkDeflate(CompressionLevel.Optimal));
             benchmarks.Add(new BenchmarkDeflate(CompressionLevel.Fastest));
             //benchmarks.Add(new BenchmarkDeflate(CompressionLevel.SmallestSize));
-
+            
             // Brotli
             benchmarks.Add(new BenchmarkBrotli(CompressionLevel.Optimal));
             benchmarks.Add(new BenchmarkBrotli(CompressionLevel.Fastest));
             //benchmarks.Add(new BenchmarkBrotli(CompressionLevel.SmallestSize));
-
+            
             // ZLib
             benchmarks.Add(new BenchmarkZLib(CompressionLevel.Optimal));
             benchmarks.Add(new BenchmarkZLib(CompressionLevel.Fastest));
             //benchmarks.Add(new BenchmarkZLib(CompressionLevel.SmallestSize));
-
+            
             benchmarks.Add(new BenchmarkSnappy());
 
             // LZMA
