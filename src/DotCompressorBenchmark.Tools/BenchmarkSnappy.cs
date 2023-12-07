@@ -32,7 +32,7 @@ public class BenchmarkSnappy : IBenchmark
     public static long Decompress(byte[] compressedBytes, long size, byte[] uncompressedBytes)
     {
         using MemoryStream ms = new MemoryStream(compressedBytes, 0, (int)size);
-        using SnappyStream stream = new SnappyStream(ms, CompressionMode.Decompress, true);
+        using SnappyStream stream = new SnappyStream(ms, CompressionMode.Decompress);
         return stream.Read(uncompressedBytes);
     }
 }

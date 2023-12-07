@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.IO.Compression;
+using ICSharpCode.SharpZipLib.Lzw;
 
 namespace DotCompressorBenchmark.Tools;
 
@@ -21,19 +22,19 @@ public class BenchmarkBrotli : IBenchmark
 
     public static long Compress(byte[] uncompressedBytes, byte[] compressedBytes, CompressionLevel level)
     {
-        using MemoryStream ms = new MemoryStream(compressedBytes);
-        using (BrotliStream gzipStream = new BrotliStream(ms, level, true))
+        using var compressedStream = new MemoryStream(compressedBytes);
+        using (var ops = new BrotliStream(compressedStream, level, true))
         {
-            gzipStream.Write(uncompressedBytes, 0, uncompressedBytes.Length);
+            ops.Write(uncompressedBytes, 0, uncompressedBytes.Length);
         }
 
-        return ms.Position;
+        return compressedStream.Position;
     }
 
     public static long Decompress(byte[] compressedBytes, long size, byte[] uncompressedBytes)
     {
-        using MemoryStream ms = new MemoryStream(compressedBytes, 0, (int)size);
-        using BrotliStream gzipStream = new BrotliStream(ms, CompressionMode.Decompress);
-        return gzipStream.Read(uncompressedBytes);
+        using var compressedStream = new MemoryStream(compressedBytes, 0, (int)size);
+        using var ips = new BrotliStream(compressedStream, CompressionMode.Decompress);
+        return ips.Read(uncompressedBytes);
     }
 }

@@ -32,6 +32,7 @@ If you have any compression libraries you'd like to add, please let me know.
 - zlib - [system.io.compression.zlibstream](https://learn.microsoft.com/en-us/dotnet/api/system.io.compression.zlibstream)
 - zip - [system.io.compression.ziparchive](https://learn.microsoft.com/en-us/dotnet/api/system.io.compression.ziparchive)
 - snappy - [Snappier](https://github.com/brantburnett/Snappier)
+- bzip2 - [SharpZipLib](https://github.com/icsharpcode/SharpZipLib)
 
 ### Benchmark
 - CPU : Ryzen 3600 single core
@@ -63,5 +64,8 @@ If you have any compression libraries you'd like to add, please let me know.
 | lzma 22.1.1 -4   | 0.23       | 23.94        | 50444814   | 23.80   | silesia.tar | 211948544 |
 | lzma 22.1.1 -2   | 0.31       | 21.38        | 53730001   | 25.35   | silesia.tar | 211948544 |
 | lzma 22.1.1 -0   | 0.40       | 18.04        | 59953750   | 28.29   | silesia.tar | 211948544 |
+| bzip2 -1         | 1.99       | 31.60        | 60533303   | 28.56   | silesia.tar | 211948544 |
+| bzip2 -5         | 1.78       | 30.28        | 55723253   | 26.29   | silesia.tar | 211948544 |
+| bzip2 -9         | 1.63       | 29.83        | 54535438   | 25.73   | silesia.tar | 211948544 |
 
 

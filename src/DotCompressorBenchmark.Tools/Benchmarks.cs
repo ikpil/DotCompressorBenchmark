@@ -80,13 +80,18 @@ public static class Benchmarks
             //benchmarks.Add(new BenchmarkZLib(CompressionLevel.SmallestSize));
             
             benchmarks.Add(new BenchmarkSnappy());
-
+            
             // LZMA
             benchmarks.Add(new BenchmarkLZMA(0));
             benchmarks.Add(new BenchmarkLZMA(2));
             benchmarks.Add(new BenchmarkLZMA(4));
             benchmarks.Add(new BenchmarkLZMA(5));
             benchmarks.Add(new BenchmarkLZMA(9));
+            
+            // LZO
+            benchmarks.Add(new BenchmarkBZip2(1));
+            benchmarks.Add(new BenchmarkBZip2(5));
+            benchmarks.Add(new BenchmarkBZip2(9));
 
             var results = new List<BenchmarkResult>();
             foreach (var file in files)
