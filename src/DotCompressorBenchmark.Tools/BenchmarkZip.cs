@@ -45,28 +45,26 @@ public class BenchmarkZip : IBenchmark
         return Benchmarks.Roundtrip(Name, filename, srcBytes, dstBytes, (s, d) => Compress(s, d, _level), Decompress);
     }
 
-    public static long Compress(byte[] srcBytes, byte[] dstBytes, CompressionLevel level)
+    public static long Compress(byte[] uncompressedBytes, byte[] compressedBytes, CompressionLevel level)
     {
-        using var ms = new MemoryStream();
-        using (var zip = new ZipArchive(ms, ZipArchiveMode.Create))
+        using var ms = new MemoryStream(compressedBytes);
+        using (var zip = new ZipArchive(ms, ZipArchiveMode.Create, true))
         {
             var entry = zip.CreateEntry("test", level);
             using var s = entry.Open();
-            s.Write(srcBytes, 0, srcBytes.Length);
+            s.Write(uncompressedBytes, 0, uncompressedBytes.Length);
         }
 
-        var ssss = ms.ToArray().AsSpan();
-        ssss.CopyTo(dstBytes);
-        return ssss.Length;
+        return ms.Position;
     }
 
-    public static long Decompress(byte[] srcBytes, long size, byte[] dstBytes)
+    public static long Decompress(byte[] compressedBytes, long size, byte[] uncompressedBytes)
     {
-        using var readStream = new MemoryStream(srcBytes, 0, (int)size);
+        using var readStream = new MemoryStream(compressedBytes, 0, (int)size);
         using var zip = new ZipArchive(readStream, ZipArchiveMode.Read);
         var entry = zip.Entries[0];
         using var entryStream = entry.Open();
-        using MemoryStream writeStream = new MemoryStream(dstBytes);
+        using MemoryStream writeStream = new MemoryStream(uncompressedBytes);
         entryStream.CopyTo(writeStream);
         return writeStream.Position;
     }
