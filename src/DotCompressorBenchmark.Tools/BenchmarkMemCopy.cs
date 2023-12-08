@@ -42,15 +42,15 @@ public class BenchmarkMemCopy : IBenchmark
     }
 
 
-    public static long CompressMemcpy(byte[] srcBytes, byte[] dstBytes)
+    public static long CompressMemcpy(byte[] uncompressedBytes, byte[] compressedBytes)
     {
-        srcBytes.CopyTo(new Span<byte>(dstBytes));
-        return srcBytes.Length;
+        uncompressedBytes.CopyTo(new Span<byte>(compressedBytes));
+        return uncompressedBytes.Length;
     }
 
-    public static long DecompressMemcpy(byte[] srcBytes, long size, byte[] dstBytes)
+    public static long DecompressMemcpy(byte[] compressedBytes, long size, byte[] uncompressedBytes)
     {
-        srcBytes.AsSpan(0, (int)size).CopyTo(new Span<byte>(dstBytes));
+        compressedBytes.AsSpan(0, (int)size).CopyTo(new Span<byte>(uncompressedBytes));
         return size;
     }
 }

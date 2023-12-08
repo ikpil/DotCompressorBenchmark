@@ -53,17 +53,17 @@ public class BenchmarkLZ4 : IBenchmark
             (s, d) => Compress(s, d, _level), Decompress);
     }
 
-    public static long Compress(byte[] srcBytes, byte[] dstBytes, LZ4Level level)
+    public static long Compress(byte[] uncompressedBytes, byte[] compressedBytes, LZ4Level level)
     {
-        var writer = new FixedArrayBufferWriter<byte>(dstBytes);
-        LZ4Pickler.Pickle(srcBytes, writer, level);
+        var writer = new FixedArrayBufferWriter<byte>(compressedBytes);
+        LZ4Pickler.Pickle(uncompressedBytes, writer, level);
         return writer.WrittenCount;
     }
 
-    public static long Decompress(byte[] srcBytes, long size, byte[] dstBytes)
+    public static long Decompress(byte[] compressedBytes, long size, byte[] uncompressedBytes)
     {
-        var writer = new FixedArrayBufferWriter<byte>(dstBytes);
-        LZ4Pickler.Unpickle(srcBytes.AsSpan(0, (int)size), writer);
+        var writer = new FixedArrayBufferWriter<byte>(uncompressedBytes);
+        LZ4Pickler.Unpickle(compressedBytes.AsSpan(0, (int)size), writer);
         return writer.WrittenCount;
     }
 }

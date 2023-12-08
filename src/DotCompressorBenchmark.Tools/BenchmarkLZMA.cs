@@ -56,7 +56,7 @@ public class BenchmarkLZMA : IBenchmark
             (s, d) => Compress(s, d, _level), Decompress);
     }
 
-    public static long Compress(byte[] srcBytes, byte[] dstBytes, int level)
+    public static long Compress(byte[] uncompressedBytes, byte[] compressedBytes, int level)
     {
         var props = new CLzmaEncProps();
         props.level = level;
@@ -92,8 +92,8 @@ public class BenchmarkLZMA : IBenchmark
         if (props.mc == 0) props.mc = ((16 + (props.fb >> 1)) >> (0 != props.btMode ? 0 : 1));
         if (props.numThreads < 0) props.numThreads = ((0 != props.btMode && 0 != props.algo) ? 2 : 1);
 
-        using MemoryStream inStream = new MemoryStream(srcBytes);
-        using MemoryStream outStream = new MemoryStream(dstBytes);
+        using MemoryStream inStream = new MemoryStream(uncompressedBytes);
+        using MemoryStream outStream = new MemoryStream(compressedBytes);
         var encoder = new Encoder();
         encoder.SetCoderProperties(new CoderPropID[]
         {
@@ -125,16 +125,16 @@ public class BenchmarkLZMA : IBenchmark
             props.writeEndMark,
         });
         encoder.WriteCoderProperties(outStream);
-        outStream.Write(BitConverter.GetBytes((long)srcBytes.Length), 0, 8);
-        encoder.Code(inStream, outStream, srcBytes.Length, dstBytes.Length, null);
+        outStream.Write(BitConverter.GetBytes((long)uncompressedBytes.Length), 0, 8);
+        encoder.Code(inStream, outStream, uncompressedBytes.Length, compressedBytes.Length, null);
 
         return outStream.Position;
     }
 
-    public static long Decompress(byte[] srcBytes, long size, byte[] dstBytes)
+    public static long Decompress(byte[] compressedBytes, long size, byte[] uncompressedBytes)
     {
-        using var inStream = new MemoryStream(srcBytes, 0, (int)size);
-        using var outStream = new MemoryStream(dstBytes);
+        using var inStream = new MemoryStream(compressedBytes, 0, (int)size);
+        using var outStream = new MemoryStream(uncompressedBytes);
 
         byte[] properties = new byte[5];
         inStream.Read(properties, 0, 5); // header
@@ -145,7 +145,7 @@ public class BenchmarkLZMA : IBenchmark
 
         var decoder = new Decoder();
         decoder.SetDecoderProperties(properties);
-        decoder.Code(inStream, outStream, size, dstBytes.Length, null);
+        decoder.Code(inStream, outStream, size, uncompressedBytes.Length, null);
 
         return outStream.Position;
     }

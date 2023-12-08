@@ -43,19 +43,19 @@ public class BenchmarkFastLZ : IBenchmark
         return Benchmarks.Roundtrip(Name, filename, srcBytes, dstBytes, (s, d) => Compress(s, d, _level), Decompress);
     }
 
-    private static long Compress(byte[] srcBytes, byte[] dstBytes, int level)
+    private static long Compress(byte[] uncompressedBytes, byte[] compressedBytes, int level)
     {
         if (2 == level)
         {
-            return FastLZ.CompressLevel2(srcBytes, 0, srcBytes.Length, dstBytes);
+            return FastLZ.CompressLevel2(uncompressedBytes, 0, uncompressedBytes.Length, compressedBytes);
         }
 
-        return FastLZ.CompressLevel1(srcBytes, 0, srcBytes.Length, dstBytes);
+        return FastLZ.CompressLevel1(uncompressedBytes, 0, uncompressedBytes.Length, compressedBytes);
     }
 
 
-    private static long Decompress(byte[] srcBytes, long size, byte[] dstBytes)
+    private static long Decompress(byte[] compressedBytes, long size, byte[] uncompressedBytes)
     {
-        return FastLZ.Decompress(srcBytes, size, dstBytes, dstBytes.Length);
+        return FastLZ.Decompress(compressedBytes, size, uncompressedBytes, uncompressedBytes.Length);
     }
 }
