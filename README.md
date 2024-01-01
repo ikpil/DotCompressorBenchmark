@@ -1,9 +1,10 @@
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![.NET](https://github.com/ikpil/DotCompressorBenchmark/actions/workflows/dotnet.yml/badge.svg)](https://github.com/ikpil/DotCompressorBenchmark/actions/workflows/dotnet.yml)
 [![CodeQL](https://github.com/ikpil/DotCompressorBenchmark/actions/workflows/codeql.yml/badge.svg)](https://github.com/ikpil/DotCompressorBenchmark/actions/workflows/codeql.yml)
-![Repo Size](https://img.shields.io/github/repo-size/ikpil/DotCompressorBenchmark.svg?colorB=lightgray)
+![GitHub repo size](https://img.shields.io/github/repo-size/ikpil/DotCompressorBenchmark)
 ![Languages](https://img.shields.io/github/languages/top/ikpil/DotCompressorBenchmark)
 [![Visitors](https://api.visitorbadge.io/api/daily?path=https%3A%2F%2Fgithub.com%2Fikpil%2FDotCompressorBenchmark&countColor=%23263759&style=flat-square)](https://visitorbadge.io/status?path=https%3A%2F%2Fgithub.com%2Fikpil%2FDotCompressorBenchmark)
+[![GitHub Sponsors](https://img.shields.io/github/sponsors/ikpil?style=flat-square&logo=GitHub-Sponsors&link=https%3A%2F%2Fgithub.com%2Fsponsors%2Fikpil)](https://github.com/sponsors/ikpil)
 
 ## Introduction 
 dcbench is an in-memory benchmark of .net compressors
