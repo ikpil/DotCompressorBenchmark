@@ -7,6 +7,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{37B176A6-F46
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotCompressorBenchmark.Tools", "src\DotCompressorBenchmark.Tools\DotCompressorBenchmark.Tools.csproj", "{9044992E-5145-4719-9841-6AB2CF9CC999}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dcbench", "src\dcbench\dcbench.csproj", "{199C649E-9FD2-4ED0-A721-C12528B489B9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,8 +22,13 @@ Global
 		{9044992E-5145-4719-9841-6AB2CF9CC999}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9044992E-5145-4719-9841-6AB2CF9CC999}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9044992E-5145-4719-9841-6AB2CF9CC999}.Release|Any CPU.Build.0 = Release|Any CPU
+		{199C649E-9FD2-4ED0-A721-C12528B489B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{199C649E-9FD2-4ED0-A721-C12528B489B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{199C649E-9FD2-4ED0-A721-C12528B489B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{199C649E-9FD2-4ED0-A721-C12528B489B9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{9044992E-5145-4719-9841-6AB2CF9CC999} = {37B176A6-F467-4F2B-92E2-A8E966AA7E41}
+		{199C649E-9FD2-4ED0-A721-C12528B489B9} = {37B176A6-F467-4F2B-92E2-A8E966AA7E41}
 	EndGlobalSection
 EndGlobal

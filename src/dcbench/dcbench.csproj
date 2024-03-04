@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>dcbench</AssemblyName>
+    <ToolCommandName>dcbench</ToolCommandName>
+    <PackAsTool>true</PackAsTool>
+    <PackageId>dcbench</PackageId>
+    <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DotCompressorBenchmark.Tools\DotCompressorBenchmark.Tools.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -9,8 +9,9 @@
 ## Introduction 
 dcbench is an in-memory benchmark of .net compressors
 
-## Usage: DotCompressorBenchmark.Tools
+## Usage: dcbench
 ```shell
+$ dotnet tool install --global dcbench
 $ ./dcbench --help
 dcbench: .net compressor benchmark tool 2023.11.11
 Copyright (c) Choi Ikpil(ikpil@naver.com)

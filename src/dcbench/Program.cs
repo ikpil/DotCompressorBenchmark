@@ -25,8 +25,7 @@ SOFTWARE.
 using System;
 using System.Collections.Generic;
 using System.IO;
-
-namespace DotCompressorBenchmark.Tools;
+using DotCompressorBenchmark.Tools;
 
 public static class Program
 {
